@@ -1,0 +1,19 @@
+#core framework
+Flask==2.3.3
+
+#Environment variables
+python-dotenv==1.0.0
+
+#Database & ORM
+Flask-SQLAlchemy==3.0.3
+Flask-Migrate==4.0.4
+
+
+#validation
+pydantic==2.8.2
+
+#Authentication & Security
+Flask-JWT-Extended==4.4.4
+passlib[bcrypt]==1.7.4
+bcrypt==4.1.3
+
