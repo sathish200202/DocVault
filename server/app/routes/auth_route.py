@@ -22,3 +22,8 @@ def login(validated_data):
 @jwt_required_user
 def profile(user):
     return AuthService.get_profile(user.id)
+
+@auth_bp.route("/logout", methods=["POST"])
+@jwt_required_user
+def logout(user):
+    return AuthService.logout_user(user.id)

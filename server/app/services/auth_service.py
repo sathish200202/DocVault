@@ -2,6 +2,9 @@ from app.models.user_model import User
 from app.utils.response import format_response
 from app.extentions import db
 from app.utils.jwt_utils import generate_jwt_token
+from flask_jwt_extended import get_jwt
+from app.models.token_blacklist import TokenBlacklist
+
 
 class AuthService:
     @staticmethod
@@ -91,3 +94,23 @@ class AuthService:
         
         except Exception as e:
             return format_response(None, "Failed to retrieve profile", False, str(e)), 500
+        
+    @staticmethod
+    def logout_user(user_id):
+        try:
+            jwt_data = get_jwt()
+            jti = jwt_data["jti"]
+            db.session.add(TokenBlacklist(jti=jti))
+            db.session.commit()
+            return format_response(
+                data=None,
+                message="Logged out successfully"
+            ), 200
+        except Exception as e:
+            db.session.rollback()
+            return format_response(
+                data=None,
+                message="Logout failed",
+                success=False,
+                error=str(e)
+            ), 500

@@ -1,6 +1,7 @@
 from flask import Flask
 from app.config import Config
 from app.extentions import db, migrate, jwt
+from app.utils.jwt_callbacks import is_token_revoked
 
 
 def create_app():
@@ -10,7 +11,10 @@ def create_app():
     migrate.init_app(app, db)
     jwt.init_app(app)
 
-    from app.models.user_model import User
+    #JWT revocation check
+    @jwt.token_in_blocklist_loader
+    def check_if_token_revoked(jwt_header, jwt_payload):
+        return is_token_revoked(jwt_header, jwt_payload)
 
     from app.routes.auth_route import auth_bp
 
