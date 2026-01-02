@@ -22,7 +22,16 @@ def upload_file(user):
 @file_bp.route("/my-files", methods=["GET"])
 @jwt_required_user
 def get_user_files(user):
-    return FileService.get_user_files(user.id)
+    page = request.args.get("page", 1)
+    limit = request.args.get("limit", 10)
+    sort = request.args.get("sort", "desc")
+
+    return FileService.get_user_files(
+        user_id=user.id,
+        page=page,
+        limit=limit,
+        sort=sort
+    )
 
 @file_bp.route("/my-files/<int:file_id>", methods=["GET"])
 @jwt_required_user

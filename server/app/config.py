@@ -30,3 +30,8 @@ class Config:
     S3_SECRET_KEY = os.getenv("AWS_S3_SECRET_ACCESS_KEY")
     S3_REGION = os.getenv("AWS_REGION_NAME")
     SIGN_URL_EXPIRATION = int(os.getenv("SIGN_URL_EXPIRATION"))
+
+    #Pagination
+    PAGE = int(os.getenv("PAGE"))
+    LIMIT = int(os.getenv("LIMIT"))
+    SORT = os.getenv("SORT")

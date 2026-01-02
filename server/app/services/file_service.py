@@ -3,6 +3,7 @@ from app.models.file_model import File
 from app.utils.response import format_response
 from app.services.s3_service import S3Service
 from flask import current_app
+from math import ceil
 
 
 class FileService:
@@ -39,9 +40,22 @@ class FileService:
         
 
     @staticmethod
-    def get_user_files(user_id):
+    def get_user_files(user_id, page=1, limit=10, sort="desc"):
         try:
-            files = File.query.filter_by(user_id=user_id).all()
+            page = max(int(page), 1)
+            limit = min(max(int(limit), 1), 100)
+            offset = (page - 1) * limit
+
+            query = File.query.filter_by(user_id=user_id)
+
+            if sort == "asc":
+                query = query.order_by(File.upload_date.asc())
+            else:
+                query = query.order_by(File.upload_date.desc())
+
+            total_count = query.count()
+            files = query.offset(offset).limit(limit).all()
+
             file_list = [
                 {
                     "file_id": f.id,
@@ -55,7 +69,15 @@ class FileService:
             return format_response(
                 success=True,
                 message="Files retrieved successfully",
-                data=file_list
+                 data={
+                "items": file_list,
+                "pagination": {
+                    "page": page,
+                    "limit": limit,
+                    "total_items": total_count,
+                    "total_pages": ceil(total_count / limit)
+                }
+            }
             )
         except Exception as e:
             return format_response(success=False, message=str(e))
