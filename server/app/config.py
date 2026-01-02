@@ -21,3 +21,12 @@ class Config:
 
     JWT_EXPIRES_IN_HOURS = int(os.getenv("JWT_EXPIRES_IN_HOURS"))
     SECRET_KEY = os.getenv("SECRET_KEY")
+
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER")
+
+    #AWS S3 Configuration
+    S3_BUCKET_NAME = os.getenv("AWS_S3_BUCKET_NAME")
+    S3_ACCESS_KEY = os.getenv("AWS_S3_ACCESS_KEY_ID")
+    S3_SECRET_KEY = os.getenv("AWS_S3_SECRET_ACCESS_KEY")
+    S3_REGION = os.getenv("AWS_REGION_NAME")
+    SIGN_URL_EXPIRATION = int(os.getenv("SIGN_URL_EXPIRATION"))

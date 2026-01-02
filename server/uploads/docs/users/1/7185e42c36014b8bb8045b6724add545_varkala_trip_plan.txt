@@ -1,0 +1,9 @@
+trip - from SALEM to VARKALA(3D/2N)
+date - 
+persons - 8
+budget - 4k - 5k
+
+Places:
+	varakala
+	palaruvi
+	courtallam
