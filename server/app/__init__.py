@@ -18,8 +18,10 @@ def create_app():
 
     from app.routes.auth_route import auth_bp
     from app.routes.file_route import file_bp
+    from app.routes.admin_route import admin_bp
 
     app.register_blueprint(auth_bp, url_prefix='/v1/auth')
     app.register_blueprint(file_bp, url_prefix='/v1/file')
+    app.register_blueprint(admin_bp, url_prefix='/v1/admin')
     
     return app

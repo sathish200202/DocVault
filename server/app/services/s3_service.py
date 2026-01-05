@@ -8,8 +8,6 @@ class S3Service:
     def get_client():
         return boto3.client(
             's3',
-            aws_access_key_id=current_app.config["S3_ACCESS_KEY"],
-            aws_secret_access_key=current_app.config["S3_SECRET_KEY"],
             region_name=current_app.config["S3_REGION"]
         )
     
